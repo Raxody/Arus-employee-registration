@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ADN SUAPORTE</title>
+</h:head>
+<h:body>
+	<div style="text-align: center; padding: 0px 150px 0px 150px;">
+		<h1
+			style="border: 2px solid #b5f2f2; font: normal bold 40px quicksand; color: black; letter-spacing: 2px; text-transform: uppercase; padding: 5px; border-radius: 30px 0px 30px 0px;">ADN
+			SUAPORTE</h1>
+	</div>
+	<div>
+		<h:form id="formId">
+			<div style="text-align: center;">
+				<h3>FORMULARIO DE REGISTRO A SALUD Y PENSIÓN</h3>
+			</div>
+
+			<table>
+				<tr>
+					<td><h:outputLabel value="Primer nombre:" for="primerNombre" />
+					</td>
+					<td><h:inputText id="primerNombre"
+							value="#{registroPersona.persona.primerNombre}"
+							validator="#{registroPersona.validarPrimerNombre}" /> <h:messages
+							for="primerNombre" style="color: red" layout="table" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Segundo nombre:" for="segundoNombre" />
+					</td>
+					<td><h:inputText id="segundoNombre"
+							value="#{registroPersona.persona.segundoNombre}"
+							validator="#{registroPersona.validarSegundoNombre}" /> <h:messages
+							for="segundoNombre" style="color: red" layout="table" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Primer apellido:"
+							for="primerApellido" /></td>
+					<td><h:inputText id="primerApellido"
+							value="#{registroPersona.persona.primerApellido}"
+							validator="#{registroPersona.validarPrimerApellido}" /> <h:messages
+							for="primerApellido" style="color: red" layout="table" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Segundo apellido:"
+							for="segundoApellido" /></td>
+					<td><h:inputText id="segundoApellido"
+							value="#{registroPersona.persona.segundoApellido}"
+							validator="#{registroPersona.validarSegundoApellido}" /> <h:messages
+							for="segundoApellido" style="color: red" layout="table" /></td>
+				</tr>
+				<tr>
+					<td><h:selectOneMenu
+							value="#{registroPersona.documento.tipoDocumento}"
+							onchange="passValue(this.value)">
+							<f:selectItem itemLabel="Seleccionar tipo de documento"></f:selectItem>
+							<f:selectItems value="#{registroPersona.documentos}" />
+						</h:selectOneMenu> <h:inputHidden id="input-hidden"
+							value="#{registroPersona.documento.tipoDocumento}"
+							validator="#{registroPersona.validarDocumento}">
+							<f:attribute name="identificacion" value="#{identificacion}" />
+						</h:inputHidden> <h:outputLabel for="identificacion" value="# " /></td>
+					<td><h:inputText id="identificacion"
+							binding="#{identificacion}"
+							value="#{registroPersona.documento.numeroDocumento}" /> <h:message
+							for="input-hidden" style="color: red;" layout="table" /></td>
+				</tr>
+				<tr>
+					<td><h:selectOneMenu
+							value="#{registroPersona.administradoraSalud.tipoAdministradoraSalud}"
+							onchange="passValueSalud(this.value)">
+							<f:selectItem itemLabel="Seleccionar administradora de salud"></f:selectItem>
+							<f:selectItems value="#{registroPersona.administradorasSalud}" />
+						</h:selectOneMenu> <h:inputHidden id="input-hidden-Salud"
+							value="#{registroPersona.administradoraSalud.tipoAdministradoraSalud}"
+							validator="#{registroPersona.validarAdministradoraSalud}">
+							<f:attribute name="saludObtenida" value="#{saludObtenida}" />
+						</h:inputHidden> <h:outputLabel for="saludObtenida" value="Fecha(aaaa-mm-dd) " /></td>
+					<td><h:inputText id="saludObtenida" binding="#{saludObtenida}"
+							value="#{registroPersona.administradoraSalud.fecha}" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><h:message for="input-hidden-Salud" style="color: red;"
+							layout="table" /></td>
+
+				</tr>
+
+
+				<tr>
+					<td><h:selectOneMenu
+							value="#{registroPersona.administradoraPension.tipoAdministradoraPension}"
+							onchange="passValuePension(this.value)">
+							<f:selectItem itemLabel="Seleccionar administradora de pensión"></f:selectItem>
+							<f:selectItems value="#{registroPersona.administradorasPension}" />
+						</h:selectOneMenu> <h:inputHidden id="input-hidden-Pension"
+							value="#{registroPersona.administradoraPension.tipoAdministradoraPension}"
+							validator="#{registroPersona.validarAdministradoraPension}">
+							<f:attribute name="pensionObtenida" value="#{pensionObtenida}" />
+						</h:inputHidden> <h:outputLabel for="pensionObtenida" value="Fecha(aaaa/mm/dd): " /></td>
+					<td><h:inputText id="pensionObtenida"
+							binding="#{pensionObtenida}"
+							value="#{registroPersona.administradoraPension.fecha}" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><h:message for="input-hidden-Pension" style="color: red;"
+							layout="table" /></td>
+
+				</tr>
+
+				<tr style="text-align: right;">
+					<td><h:commandButton value="Ingresar"
+							action="#{registroPersona.crear}"></h:commandButton></td>
+				</tr>
+			</table>
+		</h:form>
+	</div>
+
+	<script>
+        function passValue(select) {
+            var inputH = document.getElementById("formId:input-hidden");
+            inputH.value = select;
+        }
+    </script>
+
+	<script>
+        function passValuePension(select) {
+            var inputH = document.getElementById("formId:input-hidden-Pension");
+            inputH.value = select;
+        }
+   		 </script>
+
+	<script>
+        function passValueSalud(select) {
+            var inputH = document.getElementById("formId:input-hidden-Salud");
+            inputH.value = select;
+        }
+   		 </script>
+
+</h:body>
+</html>

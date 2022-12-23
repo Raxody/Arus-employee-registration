@@ -1,0 +1,44 @@
+//created on: Aug 16, 2022
+package rules
+
+//list any import classes here.
+
+import com.co.ceiba.arus.modelo.entidad.AdministradoraPension;
+import com.co.ceiba.arus.modelo.entidad.Registro;
+import com.co.ceiba.arus.controlador.ControladorRegistro;
+//declare any global variables here
+
+//  
+
+rule "Criterio 1"
+
+    when
+        $registro: Registro( administradoraPension.codigo == "AFP003" 
+        && validadorFechaCriterios("2021-01-01",administradoraPension.fecha)) 
+    then
+       $registro.setMensaje("Para la administradora de pensión Colpensiones solo es posible afiliarse después de  2020-12-31");
+
+end
+
+
+
+rule "Criterio 2"
+
+    when
+        $registro: Registro( documento.tipoDocumento == "Registro civil" &&  (administradoraSalud.codigo == "EPS003" || 
+        administradoraSalud.codigo == "EPS004")) 
+    then
+       $registro.setMensaje("Para una persona con tipo de documento RC Registro civil no es permitido afiliarse a las EPS: Coomeva, Medimas");
+
+end
+
+
+rule "Criterio 3"
+
+    when
+        $registro: Registro( administradoraPension.codigo != "AFP001" &&  administradoraSalud.codigo == "EPS002") 
+    then
+       $registro.setMensaje("Las personas que se afilien a la administradora de salud Sura EPS solo pueden afiliarse a la administradora de pensión Protección");
+
+end
+

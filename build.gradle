@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+
+group = 'co.com.ceiba'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
+}
+
+dependencies {
+    
+    compileOnly fileTree(dir: "src/WebContent/WEB-INF/lib", include: '*.jar')
+
+    implementation 'com.google.code.gson:gson:2.7'
+    
+    implementation 'org.drools:drools-core:5.2.0.Final'
+    implementation 'org.drools:drools-compiler:5.2.0.Final'
+    implementation 'org.drools:knowledge-api:5.2.0.Final'
+
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    compileOnly 'javax.faces:javax.faces-api:2.1'
+    compileOnly 'javax:javaee-api:7.0'
+
+	implementation 'commons-io:commons-io:2.5'
+
+    
+  
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+}
+
+
+sourceSets.test.java.srcDirs = [ 'test' ]
+sourceSets.test.resources.srcDirs = [ 'test' ]
+
+webAppDirName = 'src/WebContent'
+
+// Define the main class for the application
+
+mainClassName = 'co.com.ceiba.App'
